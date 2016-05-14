@@ -29,8 +29,8 @@ function main(robot){
 	var btc = require("./lib/bitcoin_utils.js");
 	btc.setRobot(robot);
 
-	robot.hear(/bitcoin( .*)?/i, function(res){
-		if(res.message.rawText.match(/^bitcoin/i)){
+	robot.hear(/(?:bitcoin|btc)( .*)?/i, function(res){
+		if(res.message.rawText.match(/(^bitcoin)|(^btc)/i)){
 
 			res.match[1] = res.match[1].trim();
 			switch(true){
