@@ -92,7 +92,12 @@ function main(robot){
 				" - p : alias for price"
 				].join("\n\t");
 	}
-
+	/*
+	* Balance command handler
+	* Get balance for the current user.
+	* @params : 
+	* 		- res : response from robot
+	*/ 
 	function _getBalance(res){
 		var user = res.message.user.name.toLowerCase();
 		var tmp = "";
@@ -113,6 +118,12 @@ function main(robot){
 		});
 	}
 
+	/*
+	* Balance command by currency handler
+	* Get balance in the given currency for the current user.
+	* @params : 
+	* 		- res : response from robot
+	*/ 
 	function _getBalanceByCurrency(res){
 		var currency = res.match[1].split(" ")[1];
 
@@ -141,6 +152,12 @@ function main(robot){
 		});
 	}
 
+	/*
+	* Transaction by user command handler
+	* List last 10 transaction for current user.
+	* @params : 
+	* 		- res : response from robot
+	*/ 
 	function _getTransaction(res){
 		var user = res.message.user.name.toLowerCase();
 		btc.getTransactionByUser(user, function(err,data){
@@ -161,15 +178,19 @@ function main(robot){
 					("0" + m.getUTCMinutes()).slice(-2) + ":" +
 					("0" + m.getUTCSeconds()).slice(-2);
 				tmp += "From : [`" + data.txs[i].inputs[0].prev_out.addr + "`] to [`" + data.address + "`] Date " + dateString +"\n";
-				console.log("========== ITERATION "+ i + "==================");
 			}
-			console.log("=====================END=========================");
 			
 			res.send("List of latest transactions : \n" + tmp);
 
 		});
 	}
 
+	/*
+	* Transaction by address command handler
+	* List last 10 transaction given address.
+	* @params : 
+	* 		- res : response from robot
+	*/ 
 	function _getTransactionByAddr(res){
 		var user = res.message.user.name.toLowerCase();
 		var tmp = res.match[1].split(" ");
@@ -182,6 +203,11 @@ function main(robot){
 		});
 	}
 
+	/*
+	* List all the address saved in hubot for the current user
+	* @params : 
+	* 		- res : response from robot
+	*/
 	function _getList(res){
 		var user = res.message.user.name.toLowerCase();
 		var tmp = "";
@@ -197,6 +223,11 @@ function main(robot){
 		});
 	}
 
+	/*
+	* Delete in hubot, the address given for the current user
+	* @params : 
+	* 		- res : response from robot
+	*/ 
 	function _deleteAddr(res){
 		var user = res.message.user.name.toLowerCase();
 		var tmp = res.match[1].split(" ");
@@ -216,6 +247,11 @@ function main(robot){
 		});
 	}
 
+	/*
+	* Add in hubot, the address given for the current user
+	* @params : 
+	* 		- res : response from robot
+	*/ 
 	function _addAddr(res){
 		var user = res.message.user.name.toLowerCase();
 		var tmp = res.match[1].split(" ");
@@ -233,7 +269,11 @@ function main(robot){
 			}
 		});
 	}
-
+	/*
+	* Get balance for the address given
+	* @params : 
+	* 		- res : response from robot
+	*/ 
 	function _check(res){
 		var tmp = res.match[1].split(" ");
 		var addr = tmp[1];
@@ -246,6 +286,11 @@ function main(robot){
 			res.send("Balance : `" + data.data[0].balance + "BTC`");
 		});
 	}
+	/*
+	* Get current price of bitcoin
+	* @params : 
+	* 		- res : response from robot
+	*/
 	function _getPrice(res){
 		btc.getPrice(function(err, data){
 			if(err){
