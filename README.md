@@ -14,7 +14,7 @@ Hubot script for bitcoin management.
 - check <address> : Get balance from the address provided
 - balance : Get the balance of the current user
 - transaction : List latest transaction of the current user
-- price : value of bitoin
+- price : value of bitcoin
 - p : alias for price
 
 ## Installation
@@ -22,7 +22,7 @@ Hubot script for bitcoin management.
 Download the latest version from npm
 
 ```
-npm install hubot-bitoin
+npm install hubot-bitcoin
 ```
 Add dependency to your hubot external script:
 external-scripts.json
@@ -30,7 +30,7 @@ external-scripts.json
 [
   //....
   "hubot-redis-brain",
-  "hubot-bitoin"
+  "hubot-bitcoin"
   //....
 ]
 
