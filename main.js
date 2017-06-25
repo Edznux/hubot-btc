@@ -138,16 +138,16 @@ function main(robot){
 				res.send("Cannot get balance for user :", user);
 				return;
 			}
-			
+
 			for(var i=0; i < data.length; i++){
 				value = hu.btcToCurrency(data[i].balance/SATOSHI, currency).value;
 				tmp += "Adress : [`" + data[i].addr + "`] balance : [`" + value +" "+ currency +"`] \n";
 				total += value;
 			}
-			
+
 			tmp += "-------\n";
 			tmp += "Total : `" + total + currency + "` over " + data.length + " account(s)";
-			
+
 			res.send(tmp);
 		});
 	}
@@ -179,7 +179,7 @@ function main(robot){
 					("0" + m.getUTCSeconds()).slice(-2);
 				tmp += "From : [`" + data.txs[i].inputs[0].prev_out.addr + "`] to [`" + data.address + "`] Date " + dateString +"\n";
 			}
-			
+
 			res.send("List of latest transactions : \n" + tmp);
 
 		});
@@ -295,7 +295,7 @@ function main(robot){
 		btc.getPrice(function(err, data){
 			if(err){
 				console.error("Erreur");
-				res.send("Can't get price");
+				res.send("Can't get price : "+ err);
 				return;
 			}
 			res.send("Current value of bitcoin : `"+ data[DEFAULT_PRICE_CURRENCY].last + "€" + " ($" + data[SECOND_PRICE_CURRENCY].last + ")`");
