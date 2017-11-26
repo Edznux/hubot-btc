@@ -1,6 +1,6 @@
 {
   "name": "hubot-btc",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Hubot script for bitcoin accounting",
   "main": "main.js",
   "scripts": {
