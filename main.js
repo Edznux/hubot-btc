@@ -55,7 +55,9 @@ function main(robot){
 				case /balance (.*)/.test(res.match[1]) :
 					_getBalanceByCurrency(res);
 					break;
-
+				case /graph(.*)/.test(res.match[1]):
+					_printGraph(res);
+					break;
 				case res.match[1] == "balance" :
 					_getBalance(res);
 					break;
@@ -89,7 +91,8 @@ function main(robot){
 				" - balance <€ or $>: Get the balance of the current user in the provided currency",
 				" - transaction : List latest transaction of the current user",
 				" - price : value of bitcoin",
-				" - p : alias for price"
+				" - p : alias for price",
+				" - graph [<period> <format>] : Show btc/usdt graph. period must be [24h, 7d, 30d, 1y] and format [png, svg]"
 				].join("\n\t");
 	}
 	/*
@@ -117,6 +120,39 @@ function main(robot){
 			res.send(tmp);
 		});
 	}
+
+	/*
+	* btc graph <currency> <period> [format]
+	* Format must be in : [png,svg]
+	* Send the graph link in response
+	*
+	* Get balance for the current user.
+	* @params : 
+	* 		- res : response from robot
+	*/ 
+	function _printGraph(res){
+	
+		var user = res.message.user.name.toLowerCase();
+
+		var split = res.match[1].split(" ");
+
+		var period = split[1] || "24h";
+		var format = split[2] || "png";
+
+		if( !(format == "svg" || format == "png")){
+			return res.send("Unsupported format");
+		}
+
+		if( !(period == "24h" || period == "7d" || period == "30d" || period == "1y") ){	
+			return res.send("Format not in 24h, 7d, 30d, 1y");
+		}
+
+		var url = "https://cryptohistory.org/charts/dark/btc-usdt/"+period+"/"+format+"?nonce="+Math.floor(Math.random()*10000);
+	
+		res.send("Graph : BTC / usdt over " + period+ "\n"+ url )
+
+	}
+
 
 	/*
 	* Balance command by currency handler
